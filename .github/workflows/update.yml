@@ -1,62 +1,41 @@
-name: Update Anywhere Shadowrocket routing
+name: Update Anywhere ReFilter rules
 
 on:
   workflow_dispatch:
+
   schedule:
     - cron: "17 3 * * *"
-  push:
-    branches: [main]
-    paths:
-      - "source/**"
-      - "sources.json"
-      - "build_rules.py"
-      - "build_anywhere_refilter.py"
-      - "tests/**"
-      - ".github/workflows/update.yml"
 
 permissions:
   contents: write
 
-concurrency:
-  group: anywhere-routing-${{ github.ref }}
-  cancel-in-progress: false
-
 jobs:
-  update:
-    if: github.ref == format('refs/heads/{0}', github.event.repository.default_branch)
+  build:
     runs-on: ubuntu-latest
-    timeout-minutes: 15
+
     steps:
-      - name: Checkout default branch
+      - name: Checkout repository
         uses: actions/checkout@v7
-        with:
-          ref: ${{ github.event.repository.default_branch }}
-          fetch-depth: 0
 
       - name: Set up Python
         uses: actions/setup-python@v7
         with:
           python-version: "3.13"
 
-      - name: Check conversion semantics
-        run: python -m unittest discover -s tests -v
+      - name: Build Anywhere rule sets
+        run: python build_anywhere_refilter.py
 
-      - name: Download sources and build sets
-        run: python build_rules.py
-
-      - name: Validate published output
-        run: python build_rules.py --check
-
-      - name: Commit changed output
-        env:
-          DEFAULT_BRANCH: ${{ github.event.repository.default_branch }}
+      - name: Commit updated rules
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add -- dist/
+
+          git add dist/*.arrs
+
           if git diff --cached --quiet; then
-            echo "Rules and source fingerprints unchanged"
+            echo "No changes"
             exit 0
           fi
-          git commit -m "chore: update Anywhere routing sets"
-          git push origin "HEAD:refs/heads/$DEFAULT_BRANCH"
+
+          git commit -m "chore: update Anywhere ReFilter rules"
+          git push

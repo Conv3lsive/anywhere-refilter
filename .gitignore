@@ -1,5 +1,0 @@
-__pycache__/
-*.pyc
-.cache/
-.DS_Store
-dist.old-*/
