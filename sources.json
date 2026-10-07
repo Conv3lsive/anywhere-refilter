@@ -1,0 +1,12 @@
+{
+  "geoip": {
+    "RU": "https://raw.githubusercontent.com/Loyalsoldier/geoip/release/text/ru.txt",
+    "KZ": "https://raw.githubusercontent.com/Loyalsoldier/geoip/release/text/kz.txt"
+  },
+  "refilter": {
+    "enabled": true,
+    "domains": "https://raw.githubusercontent.com/1andrevich/Re-filter-lists/main/domains_all.lst",
+    "ips": "https://raw.githubusercontent.com/1andrevich/Re-filter-lists/main/ipsum.lst"
+  },
+  "rules_per_file": 90000
+}
