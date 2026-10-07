@@ -1,0 +1,152 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light dark">
+  <meta name="description" content="Добавить Re:filter в Anywhere: все наборы одной ссылкой и понятные назначения PROXY / DIRECT.">
+  <meta name="referrer" content="no-referrer">
+  <title>Re:filter → Anywhere</title>
+  <style>
+    :root { color-scheme: light; --bg:#f3f6f8; --surface:#fff; --text:#142333; --muted:#526577; --line:#d7e1e7; --accent:#075e52; --soft:#e2f3ed; --proxy:#2b55a7; }
+    * { box-sizing:border-box; }
+    body { margin:0; background:var(--bg); color:var(--text); font:16px/1.6 system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif; }
+    main { max-width:780px; margin:auto; padding:48px 22px 32px; }
+    .eyebrow { color:var(--accent); font-size:13px; font-weight:700; letter-spacing:.12em; text-transform:uppercase; }
+    h1 { margin:8px 0 12px; font-size:clamp(32px,7vw,46px); line-height:1.15; letter-spacing:-.04em; }
+    h2 { margin:0 0 12px; font-size:20px; letter-spacing:-.02em; }
+    p { margin:0 0 16px; }
+    .muted { color:var(--muted); }
+    .card { background:var(--surface); border:1px solid var(--line); border-radius:20px; padding:24px; margin-top:24px; }
+    .presets { display:flex; gap:10px; flex-wrap:wrap; margin-bottom:20px; }
+    .preset { border:1px solid var(--line); border-radius:12px; background:var(--surface); color:var(--text); padding:10px 16px; font:inherit; cursor:pointer; }
+    .preset[aria-pressed="true"] { border-color:var(--accent); color:var(--accent); background:var(--soft); }
+    a { color:var(--accent); text-underline-offset:3px; }
+    .primary { display:block; border-radius:12px; padding:14px 20px; background:var(--accent); color:#fff; text-align:center; text-decoration:none; font-weight:700; }
+    .primary:hover { filter:brightness(1.1); }
+    a:focus-visible,button:focus-visible { outline:3px solid #5f9ee9; outline-offset:4px; }
+    #status { margin-top:12px; font-size:14px; min-height:23px; }
+    .set { display:flex; gap:16px; justify-content:space-between; align-items:center; border-top:1px solid var(--line); padding:15px 0; }
+    .set:first-child { border-top:0; }
+    .set-name { display:block; font-weight:650; }
+    .set-hint { display:block; color:var(--muted); font-size:13px; }
+    .route { display:inline-block; color:var(--proxy); font:700 12px/1.3 ui-monospace,SFMono-Regular,monospace; background:var(--bg); border-radius:6px; padding:5px 8px; margin-right:5px; }
+    .route.direct { color:var(--accent); background:var(--soft); }
+    .set-actions { display:flex; gap:12px; align-items:center; flex-wrap:wrap; justify-content:flex-end; font-size:14px; flex-shrink:0; }
+    .copy { border:0; padding:0; color:var(--muted); background:transparent; font:inherit; text-decoration:underline; text-underline-offset:3px; cursor:pointer; }
+    ol { margin:0; padding-left:22px; }
+    li { padding:3px 0; }
+    .note { margin-top:18px; padding:14px 16px; background:var(--soft); border-radius:12px; font-size:14px; }
+    footer { display:flex; gap:20px; flex-wrap:wrap; margin-top:26px; font-size:14px; color:var(--muted); }
+    @media (max-width:480px) { main { padding:28px 16px; } .card { padding:20px; } .set { align-items:flex-start; } .set-actions { flex-direction:column; gap:7px; } }
+    @media (prefers-color-scheme:dark) { :root { color-scheme:dark; --bg:#10191e; --surface:#19252c; --text:#e9f0f3; --muted:#a6b9c3; --line:#30424c; --accent:#72d7b6; --soft:#223d35; --proxy:#9ebeff; } .primary { color:#10241c; } }
+  </style>
+</head>
+<body>
+<main>
+  <div class="eyebrow">Conv3lsive / Re:filter</div>
+  <h1>Все правила.<br>Одно добавление.</h1>
+  <p class="muted">Открой на устройстве с Anywhere. Выбери схему, добавь наборы и один раз назначь маршруты.</p>
+
+  <section class="card" aria-labelledby="import-title">
+    <h2 id="import-title">Добавить Re:filter</h2>
+    <div class="presets" role="group" aria-label="Схема маршрутизации">
+      <button class="preset" data-preset="ech" aria-pressed="true">ECH / noECH · 4 набора</button>
+      <button class="preset" data-preset="all" aria-pressed="false">Без ECH · 3 набора</button>
+    </div>
+    <p id="description" class="muted">noECH и IP — через прокси. ECH — напрямую. Force Proxy — исключение для cloudflare-ech.com.</p>
+    <a class="primary" id="launch" href="anywhere://add-rule-set?link=https://raw.githubusercontent.com/Conv3lsive/anywhere-refilter/main/dist/force-proxy.arrs&amp;link=https://raw.githubusercontent.com/Conv3lsive/anywhere-refilter/main/dist/refilter-noech.arrs&amp;link=https://raw.githubusercontent.com/Conv3lsive/anywhere-refilter/main/dist/refilter-ech.arrs&amp;link=https://raw.githubusercontent.com/Conv3lsive/anywhere-refilter/main/dist/refilter-ip.arrs">Добавить 4 набора в Anywhere</a>
+    <div id="status" class="muted" role="status" aria-live="polite"></div>
+    <div id="sets">
+      <noscript>Для добавления всех четырёх наборов нажми кнопку выше. ECH получит DIRECT автоматически; Force Proxy, noECH и IP назначь PROXY в Routing. Для схемы без ECH доступны <a href="https://raw.githubusercontent.com/Conv3lsive/anywhere-refilter/main/dist/refilter-all-domains.arrs">все домены</a> и <a href="https://raw.githubusercontent.com/Conv3lsive/anywhere-refilter/main/dist/refilter-ip.arrs">IP</a>.</noscript>
+    </div>
+  </section>
+
+  <section class="card" aria-labelledby="settings-title">
+    <h2 id="settings-title">Один раз в Anywhere</h2>
+    <ol>
+      <li>Подтверди добавление наборов.</li>
+      <li>Выбери свой <strong>VLESS / chain</strong> основным маршрутом и включи <strong>Rule</strong>.</li>
+      <li>В <strong>Routing</strong> назначь <strong>PROXY</strong> наборам с этой пометкой. <strong>ECH → DIRECT</strong> задаётся автоматически при первом добавлении.</li>
+      <li>В схеме ECH поставь <strong>Force Proxy выше ReFilter ECH</strong>.</li>
+      <li>Для российских назначений включи <strong>Country Bypass → RU</strong>.</li>
+    </ol>
+    <p class="note">Автоматически задаётся DIRECT для ECH. PROXY, основной маршрут и режим нужно выбрать в приложении: импорт-ссылка их не меняет. При обновлении подписок назначения сохраняются.</p>
+  </section>
+
+  <section class="card" aria-labelledby="help-title">
+    <h2 id="help-title">Если приложение не открылось</h2>
+    <p class="muted">Открой страницу в Safari и нажми кнопку добавления. Для ручного импорта используй «Копировать URL» рядом с нужным набором. Уже добавленные подписки достаточно обновить в Anywhere.</p>
+    <p class="muted">Правила на GitHub обновляются ежедневно. Для проверки разрешённого IPv4 по IP-набору выключи Prevent DNS Leak. Подробные настройки и вариант без ECH есть в README.</p>
+  </section>
+  <footer>
+    <a href="https://github.com/Conv3lsive/anywhere-refilter#readme">README и настройки</a>
+    <a href="https://github.com/Conv3lsive/anywhere-refilter/actions/workflows/update.yml">Обновление правил</a>
+  </footer>
+</main>
+<script>
+  const base = 'https://raw.githubusercontent.com/Conv3lsive/anywhere-refilter/main/dist/';
+  const catalog = {
+    'force-proxy': {name:'Force Proxy', route:'PROXY'},
+    'refilter-noech': {name:'ReFilter noECH', route:'PROXY'},
+    'refilter-ech': {name:'ReFilter ECH', route:'DIRECT'},
+    'refilter-ip': {name:'ReFilter IP', route:'PROXY'},
+    'refilter-all-domains': {name:'ReFilter Domains', route:'PROXY'}
+  };
+  const presets = {
+    ech: ['force-proxy', 'refilter-noech', 'refilter-ech', 'refilter-ip'],
+    all: ['force-proxy', 'refilter-all-domains', 'refilter-ip']
+  };
+  const params = new URLSearchParams(window.location.search);
+  const requestedSet = params.get('set');
+  let selected = Object.hasOwn(presets, params.get('preset')) ? params.get('preset') : 'ech';
+  let single = Object.hasOwn(catalog, requestedSet) ? requestedSet : null;
+  const launch = document.getElementById('launch');
+  const status = document.getElementById('status');
+  const makeLink = keys => 'anywhere://add-rule-set?' + keys.map(key => 'link=' + encodeURIComponent(base + key + '.arrs')).join('&');
+
+  function render() {
+    const keys = single ? [single] : presets[selected];
+    launch.href = makeLink(keys);
+    launch.textContent = single ? 'Добавить ' + catalog[single].name + ' в Anywhere' : 'Добавить ' + keys.length + ' набора в Anywhere';
+    document.getElementById('description').textContent = single
+      ? catalog[single].name + ' → ' + catalog[single].route + (catalog[single].route === 'DIRECT' ? ' автоматически при первом добавлении.' : '. Назначь PROXY один раз в Routing.')
+      : selected === 'ech'
+        ? 'noECH и IP — через прокси. ECH — напрямую. Force Proxy — исключение для cloudflare-ech.com.'
+        : 'Все домены Re:filter, IP и Force Proxy — через прокси. Вариант без разделения ECH.';
+    document.querySelectorAll('[data-preset]').forEach(button => button.setAttribute('aria-pressed', String(!single && button.dataset.preset === selected)));
+    const container = document.getElementById('sets');
+    container.replaceChildren();
+    for (const key of keys) {
+      const item = catalog[key];
+      const row = document.createElement('div'); row.className = 'set';
+      const info = document.createElement('div');
+      const name = document.createElement('span'); name.className = 'set-name'; name.textContent = item.name;
+      const hint = document.createElement('span'); hint.className = 'set-hint';
+      const badge = document.createElement('span'); badge.className = 'route' + (item.route === 'DIRECT' ? ' direct' : ''); badge.textContent = item.route;
+      hint.append(badge, document.createTextNode(item.route === 'DIRECT' ? 'автоматически' : 'выбрать в Routing'));
+      info.append(name, hint);
+      const actions = document.createElement('div'); actions.className = 'set-actions';
+      const add = document.createElement('a'); add.href = makeLink([key]); add.textContent = 'Добавить'; add.setAttribute('aria-label', 'Добавить ' + item.name);
+      const copy = document.createElement('button'); copy.className = 'copy'; copy.textContent = 'Копировать URL'; copy.setAttribute('aria-label', 'Копировать URL ' + item.name);
+      copy.addEventListener('click', async () => {
+        const url = base + key + '.arrs';
+        try { await navigator.clipboard.writeText(url); status.textContent = 'URL ' + item.name + ' скопирован.'; }
+        catch { status.replaceChildren(document.createTextNode('Скопируй URL: ')); const field = document.createElement('input'); field.readOnly = true; field.value = url; field.style.width = '100%'; status.append(field); field.focus(); field.select(); }
+      });
+      actions.append(add, copy); row.append(info, actions); container.append(row);
+    }
+  }
+
+  document.querySelectorAll('[data-preset]').forEach(button => button.addEventListener('click', () => {
+    selected = button.dataset.preset; single = null; status.textContent = ''; render();
+  }));
+  launch.addEventListener('click', () => { status.textContent = 'Подтверди импорт в Anywhere. Если приложение не открылось, попробуй Safari.'; });
+  render();
+  if (params.get('open') === '1') {
+    status.textContent = 'Открываем Anywhere… Если ничего не произошло, нажми кнопку выше.';
+    window.location.assign(launch.href);
+  }
+</script>
+</body>
+</html>
