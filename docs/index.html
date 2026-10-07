@@ -1,10 +1,10 @@
 <!doctype html>
-<html lang="ru">
+<html lang="en">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="color-scheme" content="light dark">
-  <meta name="description" content="Добавить Re:filter в Anywhere: все наборы одной ссылкой и понятные назначения PROXY / DIRECT.">
+  <meta name="description" content="Add Re:filter to Anywhere with one batch import and clear PROXY / DIRECT assignments.">
   <meta name="referrer" content="no-referrer">
   <title>Re:filter → Anywhere</title>
   <style>
@@ -45,43 +45,43 @@
 <body>
 <main>
   <div class="eyebrow">Conv3lsive / Re:filter</div>
-  <h1>Все правила.<br>Одно добавление.</h1>
-  <p class="muted">Открой на устройстве с Anywhere. Выбери схему, добавь наборы и один раз назначь маршруты.</p>
+  <h1>All the rules.<br>One import.</h1>
+  <p class="muted">Open on a device with Anywhere installed. Choose a preset, import the sets and assign their routes.</p>
 
   <section class="card" aria-labelledby="import-title">
-    <h2 id="import-title">Добавить Re:filter</h2>
-    <div class="presets" role="group" aria-label="Схема маршрутизации">
-      <button class="preset" data-preset="ech" aria-pressed="true">ECH / noECH · 4 набора</button>
-      <button class="preset" data-preset="all" aria-pressed="false">Без ECH · 3 набора</button>
+    <h2 id="import-title">Add Re:filter</h2>
+    <div class="presets" role="group" aria-label="Routing preset">
+      <button class="preset" data-preset="ech" aria-pressed="true">ECH / noECH · 4 sets</button>
+      <button class="preset" data-preset="all" aria-pressed="false">All domains · 3 sets</button>
     </div>
-    <p id="description" class="muted">noECH и IP — через прокси. ECH — напрямую. Force Proxy — исключение для cloudflare-ech.com.</p>
-    <a class="primary" id="launch" href="anywhere://add-rule-set?link=https://raw.githubusercontent.com/Conv3lsive/anywhere-refilter/main/dist/force-proxy.arrs&amp;link=https://raw.githubusercontent.com/Conv3lsive/anywhere-refilter/main/dist/refilter-noech.arrs&amp;link=https://raw.githubusercontent.com/Conv3lsive/anywhere-refilter/main/dist/refilter-ech.arrs&amp;link=https://raw.githubusercontent.com/Conv3lsive/anywhere-refilter/main/dist/refilter-ip.arrs">Добавить 4 набора в Anywhere</a>
+    <p id="description" class="muted">noECH and IP use the proxy. ECH goes direct. Force Proxy covers cloudflare-ech.com.</p>
+    <a class="primary" id="launch" href="anywhere://add-rule-set?link=https://raw.githubusercontent.com/Conv3lsive/anywhere-refilter/main/dist/force-proxy.arrs&amp;link=https://raw.githubusercontent.com/Conv3lsive/anywhere-refilter/main/dist/refilter-noech.arrs&amp;link=https://raw.githubusercontent.com/Conv3lsive/anywhere-refilter/main/dist/refilter-ech.arrs&amp;link=https://raw.githubusercontent.com/Conv3lsive/anywhere-refilter/main/dist/refilter-ip.arrs">Add 4 sets to Anywhere</a>
     <div id="status" class="muted" role="status" aria-live="polite"></div>
     <div id="sets">
-      <noscript>Для добавления всех четырёх наборов нажми кнопку выше. ECH получит DIRECT автоматически; Force Proxy, noECH и IP назначь PROXY в Routing. Для схемы без ECH доступны <a href="https://raw.githubusercontent.com/Conv3lsive/anywhere-refilter/main/dist/refilter-all-domains.arrs">все домены</a> и <a href="https://raw.githubusercontent.com/Conv3lsive/anywhere-refilter/main/dist/refilter-ip.arrs">IP</a>.</noscript>
+      <noscript>Use the button above to import all four sets. ECH receives DIRECT automatically; assign PROXY to Force Proxy, noECH and IP in Routing. The all-domains preset uses <a href="https://raw.githubusercontent.com/Conv3lsive/anywhere-refilter/main/dist/refilter-all-domains.arrs">all domains</a> and <a href="https://raw.githubusercontent.com/Conv3lsive/anywhere-refilter/main/dist/refilter-ip.arrs">IP</a>.</noscript>
     </div>
   </section>
 
   <section class="card" aria-labelledby="settings-title">
-    <h2 id="settings-title">Один раз в Anywhere</h2>
+    <h2 id="settings-title">Setup in Anywhere</h2>
     <ol>
-      <li>Подтверди добавление наборов.</li>
-      <li>Выбери свой <strong>VLESS / chain</strong> основным маршрутом и включи <strong>Rule</strong>.</li>
-      <li>В <strong>Routing</strong> назначь <strong>PROXY</strong> наборам с этой пометкой. <strong>ECH → DIRECT</strong> задаётся автоматически при первом добавлении.</li>
-      <li>В схеме ECH поставь <strong>Force Proxy выше ReFilter ECH</strong>.</li>
-      <li>Для российских назначений включи <strong>Country Bypass → RU</strong>.</li>
+      <li>Confirm the import.</li>
+      <li>Select your <strong>VLESS / chain</strong> as the default route and enable <strong>Rule</strong> mode.</li>
+      <li>Assign <strong>PROXY</strong> to the sets marked PROXY. <strong>ECH → DIRECT</strong> is automatic on first import.</li>
+      <li>For the ECH preset, place <strong>Force Proxy above ReFilter ECH</strong>.</li>
+      <li>Enable <strong>Country Bypass → RU</strong> for Russian destinations.</li>
     </ol>
-    <p class="note">Автоматически задаётся DIRECT для ECH. PROXY, основной маршрут и режим нужно выбрать в приложении: импорт-ссылка их не меняет. При обновлении подписок назначения сохраняются.</p>
+    <p class="note">ECH receives DIRECT automatically. Select PROXY, the default route and Rule mode in the app. The import link does not change those settings.</p>
   </section>
 
   <section class="card" aria-labelledby="help-title">
-    <h2 id="help-title">Если приложение не открылось</h2>
-    <p class="muted">Открой страницу в Safari и нажми кнопку добавления. Для ручного импорта используй «Копировать URL» рядом с нужным набором. Уже добавленные подписки достаточно обновить в Anywhere.</p>
-    <p class="muted">Правила на GitHub обновляются ежедневно. Для проверки разрешённого IPv4 по IP-набору выключи Prevent DNS Leak. Подробные настройки и вариант без ECH есть в README.</p>
+    <h2 id="help-title">Manual import</h2>
+    <p class="muted">Use Copy URL to add a set manually. If the app does not open, try Safari.</p>
+    <p class="muted">Turn Prevent DNS Leak off to apply IP rules to resolved IPv4 addresses when no domain rule matches. Lists on GitHub update daily.</p>
   </section>
   <footer>
-    <a href="https://github.com/Conv3lsive/anywhere-refilter#readme">README и настройки</a>
-    <a href="https://github.com/Conv3lsive/anywhere-refilter/actions/workflows/update.yml">Обновление правил</a>
+    <a href="https://github.com/Conv3lsive/anywhere-refilter#readme">README &amp; setup</a>
+    <a href="https://github.com/Conv3lsive/anywhere-refilter/actions/workflows/update.yml">Rule updates</a>
   </footer>
 </main>
 <script>
@@ -108,12 +108,12 @@
   function render() {
     const keys = single ? [single] : presets[selected];
     launch.href = makeLink(keys);
-    launch.textContent = single ? 'Добавить ' + catalog[single].name + ' в Anywhere' : 'Добавить ' + keys.length + ' набора в Anywhere';
+    launch.textContent = single ? 'Add ' + catalog[single].name + ' to Anywhere' : 'Add ' + keys.length + ' sets to Anywhere';
     document.getElementById('description').textContent = single
-      ? catalog[single].name + ' → ' + catalog[single].route + (catalog[single].route === 'DIRECT' ? ' автоматически при первом добавлении.' : '. Назначь PROXY один раз в Routing.')
+      ? catalog[single].name + ' → ' + catalog[single].route + (catalog[single].route === 'DIRECT' ? ' automatically on first import.' : '. Select PROXY in Routing.')
       : selected === 'ech'
-        ? 'noECH и IP — через прокси. ECH — напрямую. Force Proxy — исключение для cloudflare-ech.com.'
-        : 'Все домены Re:filter, IP и Force Proxy — через прокси. Вариант без разделения ECH.';
+        ? 'noECH and IP use the proxy. ECH goes direct. Force Proxy covers cloudflare-ech.com.'
+        : 'All Re:filter domains, IPs and Force Proxy use the proxy. No ECH splitting.';
     document.querySelectorAll('[data-preset]').forEach(button => button.setAttribute('aria-pressed', String(!single && button.dataset.preset === selected)));
     const container = document.getElementById('sets');
     container.replaceChildren();
@@ -124,15 +124,15 @@
       const name = document.createElement('span'); name.className = 'set-name'; name.textContent = item.name;
       const hint = document.createElement('span'); hint.className = 'set-hint';
       const badge = document.createElement('span'); badge.className = 'route' + (item.route === 'DIRECT' ? ' direct' : ''); badge.textContent = item.route;
-      hint.append(badge, document.createTextNode(item.route === 'DIRECT' ? 'автоматически' : 'выбрать в Routing'));
+      hint.append(badge, document.createTextNode(item.route === 'DIRECT' ? 'automatic' : 'select in Routing'));
       info.append(name, hint);
       const actions = document.createElement('div'); actions.className = 'set-actions';
-      const add = document.createElement('a'); add.href = makeLink([key]); add.textContent = 'Добавить'; add.setAttribute('aria-label', 'Добавить ' + item.name);
-      const copy = document.createElement('button'); copy.className = 'copy'; copy.textContent = 'Копировать URL'; copy.setAttribute('aria-label', 'Копировать URL ' + item.name);
+      const add = document.createElement('a'); add.href = makeLink([key]); add.textContent = 'Add'; add.setAttribute('aria-label', 'Add ' + item.name);
+      const copy = document.createElement('button'); copy.className = 'copy'; copy.textContent = 'Copy URL'; copy.setAttribute('aria-label', 'Copy URL for ' + item.name);
       copy.addEventListener('click', async () => {
         const url = base + key + '.arrs';
-        try { await navigator.clipboard.writeText(url); status.textContent = 'URL ' + item.name + ' скопирован.'; }
-        catch { status.replaceChildren(document.createTextNode('Скопируй URL: ')); const field = document.createElement('input'); field.readOnly = true; field.value = url; field.style.width = '100%'; status.append(field); field.focus(); field.select(); }
+        try { await navigator.clipboard.writeText(url); status.textContent = item.name + ' URL copied.'; }
+        catch { status.replaceChildren(document.createTextNode('Copy this URL: ')); const field = document.createElement('input'); field.readOnly = true; field.value = url; field.style.width = '100%'; status.append(field); field.focus(); field.select(); }
       });
       actions.append(add, copy); row.append(info, actions); container.append(row);
     }
@@ -141,10 +141,10 @@
   document.querySelectorAll('[data-preset]').forEach(button => button.addEventListener('click', () => {
     selected = button.dataset.preset; single = null; status.textContent = ''; render();
   }));
-  launch.addEventListener('click', () => { status.textContent = 'Подтверди импорт в Anywhere. Если приложение не открылось, попробуй Safari.'; });
+  launch.addEventListener('click', () => { status.textContent = 'Confirm the import in Anywhere. If the app does not open, try Safari.'; });
   render();
   if (params.get('open') === '1') {
-    status.textContent = 'Открываем Anywhere… Если ничего не произошло, нажми кнопку выше.';
+    status.textContent = 'Opening Anywhere… If nothing happens, tap the button above.';
     window.location.assign(launch.href);
   }
 </script>

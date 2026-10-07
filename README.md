@@ -1,128 +1,71 @@
 # Anywhere + Re:filter
 
-Готовые обновляемые наборы для Anywhere. Все ссылки ниже ведут в
-[ваш репозиторий](https://github.com/Conv3lsive/anywhere-refilter); подставлять адреса не нужно.
+Auto-updating routing subscriptions for Anywhere.
 
-## Добавить всю схему
+## Quick import
 
-### ECH / noECH — прежняя схема
+**[Add all 4 ECH / noECH sets to Anywhere](https://conv3lsive.github.io/anywhere-refilter/?preset=ech&open=1)**
 
-**[➜ Добавить все 4 набора в Anywhere](https://conv3lsive.github.io/anywhere-refilter/?preset=ech&open=1)**
+Open the link on a device with Anywhere installed and confirm the import.
+If the app does not open, tap **Add to Anywhere** on the import page.
 
-Открой ссылку на устройстве с установленным Anywhere и подтверди импорт.
-Если приложение не открылось само, нажми **«Добавить в Anywhere»** на странице.
-Ссылка передаёт четыре `.arrs` за одно открытие приложения.
-
-| Набор | Куда направлять | При первом добавлении |
+| Rule set | Route | Assignment |
 |---|---|---|
-| **Force Proxy** | **PROXY** | Выбрать PROXY в Routing. |
-| **ReFilter noECH — PROXY** | **PROXY** | Выбрать PROXY в Routing. |
-| **ReFilter ECH — DIRECT** | **DIRECT** | Назначается автоматически из файла. |
-| **ReFilter IP — PROXY** | **PROXY** | Выбрать PROXY в Routing. |
+| Force Proxy | **PROXY** | Select in Routing |
+| ReFilter noECH | **PROXY** | Select in Routing |
+| ReFilter ECH | **DIRECT** | Automatic on first import |
+| ReFilter IP | **PROXY** | Select in Routing |
 
-**Один раз после импорта:**
+### Setup
 
-1. Выбери свой VLESS/chain основным маршрутом.
-2. Включи режим **Rule**.
-3. В **Routing** назначь **PROXY** наборам **Force Proxy**, **ReFilter noECH**
-   и **ReFilter IP**. Для **ReFilter ECH** проверь **DIRECT**.
-4. Поставь **Force Proxy выше ReFilter ECH** в списке Routing.
-5. Включи **Country Bypass → Russia / RU**, чтобы остальные российские назначения
-   шли напрямую. Остальной трафик использует основной VLESS/chain.
+1. Select your **VLESS / chain** as the default route and enable **Rule** mode.
+2. Assign **PROXY** to Force Proxy, ReFilter noECH and ReFilter IP.
+3. Place **Force Proxy above ReFilter ECH** in Routing.
+4. Enable **Country Bypass → RU** for Russian destinations.
+5. Turn **Prevent DNS Leak off** to apply IP rules to resolved IPv4 addresses
+   when no domain rule matches.
 
-**Автоматически:** добавление списков одной ссылкой и начальный DIRECT для ECH.
-**Вручную один раз:** PROXY, выбранный VLESS/chain, Rule и Country Bypass.
-У Anywhere в `.arrs` нет начального назначения PROXY, а импорт-ссылка не
-переключает режим или Country Bypass. Оставленный **Default** использует основной
-маршрут, но имеет другой приоритет; для этой схемы выбери именно **PROXY**.
-При обновлении подписок твои назначения сохраняются.
+ECH receives **DIRECT** automatically. Anywhere requires **PROXY** to be selected
+in the app; leaving a set on Default gives it a different priority.
+The import link does not select your proxy, Rule mode or Country Bypass.
 
-### Без разделения ECH
+### Without ECH splitting
 
-**[➜ Добавить схему без ECH в Anywhere](https://conv3lsive.github.io/anywhere-refilter/?preset=all&open=1)**
+**[Add the 3-set all-domains preset](https://conv3lsive.github.io/anywhere-refilter/?preset=all&open=1)**
 
-Добавляются **Force Proxy**, **ReFilter Domains** и **ReFilter IP** — всем трём
-назначить **PROXY**. VLESS/chain, Rule и Country Bypass RU выбрать так же.
-В этом варианте все домены Re:filter идут через прокси; ECH/noECH-подписки
-отключить, чтобы DIRECT из другой схемы не вмешивался.
+Imports Force Proxy, ReFilter Domains and ReFilter IP. Assign **PROXY** to all
+three and use the same setup above. Choose one preset.
 
-## Добавить отдельный набор
+## Individual sets
 
-Кнопки «Добавить» открывают Anywhere через страницу импорта. Raw — постоянный
-URL подписки для ручного добавления через Routing → Add / Subscribe from URL.
-
-| Набор | Куда | Добавить | URL подписки |
+| Rule set | Route | Import | Subscription URL |
 |---|---|---|---|
-| Force Proxy | **PROXY** | [Добавить](https://conv3lsive.github.io/anywhere-refilter/?set=force-proxy&open=1) | [Raw](https://raw.githubusercontent.com/Conv3lsive/anywhere-refilter/main/dist/force-proxy.arrs) |
-| ReFilter noECH | **PROXY** | [Добавить](https://conv3lsive.github.io/anywhere-refilter/?set=refilter-noech&open=1) | [Raw](https://raw.githubusercontent.com/Conv3lsive/anywhere-refilter/main/dist/refilter-noech.arrs) |
-| ReFilter ECH | **DIRECT** | [Добавить](https://conv3lsive.github.io/anywhere-refilter/?set=refilter-ech&open=1) | [Raw](https://raw.githubusercontent.com/Conv3lsive/anywhere-refilter/main/dist/refilter-ech.arrs) |
-| ReFilter IP | **PROXY** | [Добавить](https://conv3lsive.github.io/anywhere-refilter/?set=refilter-ip&open=1) | [Raw](https://raw.githubusercontent.com/Conv3lsive/anywhere-refilter/main/dist/refilter-ip.arrs) |
-| ReFilter Domains: все домены | **PROXY** | [Добавить](https://conv3lsive.github.io/anywhere-refilter/?set=refilter-all-domains&open=1) | [Raw](https://raw.githubusercontent.com/Conv3lsive/anywhere-refilter/main/dist/refilter-all-domains.arrs) |
+| Force Proxy | **PROXY** | [Add](https://conv3lsive.github.io/anywhere-refilter/?set=force-proxy&open=1) | [Raw URL](https://raw.githubusercontent.com/Conv3lsive/anywhere-refilter/main/dist/force-proxy.arrs) |
+| ReFilter noECH | **PROXY** | [Add](https://conv3lsive.github.io/anywhere-refilter/?set=refilter-noech&open=1) | [Raw URL](https://raw.githubusercontent.com/Conv3lsive/anywhere-refilter/main/dist/refilter-noech.arrs) |
+| ReFilter ECH | **DIRECT** | [Add](https://conv3lsive.github.io/anywhere-refilter/?set=refilter-ech&open=1) | [Raw URL](https://raw.githubusercontent.com/Conv3lsive/anywhere-refilter/main/dist/refilter-ech.arrs) |
+| ReFilter IP | **PROXY** | [Add](https://conv3lsive.github.io/anywhere-refilter/?set=refilter-ip&open=1) | [Raw URL](https://raw.githubusercontent.com/Conv3lsive/anywhere-refilter/main/dist/refilter-ip.arrs) |
+| ReFilter Domains | **PROXY** | [Add](https://conv3lsive.github.io/anywhere-refilter/?set=refilter-all-domains&open=1) | [Raw URL](https://raw.githubusercontent.com/Conv3lsive/anywhere-refilter/main/dist/refilter-all-domains.arrs) |
 
-Если списки уже добавлены, обнови существующие подписки в Anywhere.
-Повторный импорт может создать ещё один набор. Если использовал перенос
-Shadowrocket, отключи старые подписки `dist/actions/*` и подключи эти.
+For manual import, copy a subscription link into Anywhere's Routing URL field.
+The [import page](https://conv3lsive.github.io/anywhere-refilter/) also provides
+**Copy URL** buttons. Use Safari if your browser blocks opening Anywhere.
 
-## Если кнопка не открывает приложение
+## Updates
 
-Открой [страницу импорта](https://conv3lsive.github.io/anywhere-refilter/) в Safari
-на iPhone/iPad или в браузере на Mac с Anywhere. Нажми **«Добавить в Anywhere»**.
-Во встроенном браузере GitHub открытие приложений может требовать перехода в Safari.
+[GitHub Actions](https://github.com/Conv3lsive/anywhere-refilter/actions/workflows/update.yml)
+rebuilds the lists daily at **03:17 UTC** and commits changes automatically.
+To run it immediately: **Actions → Update Anywhere ReFilter rules → Run workflow**.
+Refresh subscriptions in Anywhere to receive the latest rules.
 
-Для ручного добавления копируй нужный URL целиком:
+## Sources
 
-```text
-https://raw.githubusercontent.com/Conv3lsive/anywhere-refilter/main/dist/force-proxy.arrs
-https://raw.githubusercontent.com/Conv3lsive/anywhere-refilter/main/dist/refilter-noech.arrs
-https://raw.githubusercontent.com/Conv3lsive/anywhere-refilter/main/dist/refilter-ech.arrs
-https://raw.githubusercontent.com/Conv3lsive/anywhere-refilter/main/dist/refilter-ip.arrs
-```
+- [Re:filter](https://github.com/1andrevich/Re-filter-lists): domains and IPs.
+- [Akiyamov](https://github.com/Akiyamov/singbox-ech-list): noECH domain list.
+- [Anywhere routing format](https://github.com/NodePassProject/Anywhere/blob/main/Documentations/Routing.md)
+  and [batch import](https://github.com/NodePassProject/Anywhere#import-rule-sets).
 
-Для варианта без ECH вместо noECH/ECH используй:
+The ECH set is estimated as Re:filter minus the noECH list; membership alone
+does not verify ECH support. The all-domains preset routes all Re:filter domains
+through the proxy.
 
-```text
-https://raw.githubusercontent.com/Conv3lsive/anywhere-refilter/main/dist/refilter-all-domains.arrs
-```
-
-GitHub README не запускает `anywhere://` как обычную ссылку. Поэтому кнопки ведут
-на нашу HTTPS-страницу GitHub Pages, которая передаёт Anywhere его официальный
-`anywhere://add-rule-set?link=…&link=…`. Страница не запрашивает данные твоего VLESS.
-
-## DNS и порядок
-
-- Для применения IP-правил к доменам без доменного совпадения
-  **Prevent DNS Leak выключить**. При включении IP-набор остаётся полезен для
-  подключений к буквальным IP, но проверка разрешённого IPv4 отключается.
-- **Force Proxy** содержит `cloudflare-ech.com`. Его положение выше ECH
-  разрешает совпадения одинаковых suffix-правил в пользу PROXY.
-- Встроенные ADBlock и сервисные правила с явно назначенными действиями имеют
-  приоритет над пользовательскими списками. Если нужен результат именно этой
-  схемы, проверь их назначения отдельно.
-
-## Автоматическое обновление
-
-[GitHub Action](https://github.com/Conv3lsive/anywhere-refilter/actions/workflows/update.yml)
-обновляет правила ежедневно в **03:17 UTC / 06:17 по Москве** и коммитит только
-изменения. Для немедленного обновления: **Actions → Update Anywhere ReFilter rules
-→ Run workflow**. После этого обнови подписки в Anywhere; GitHub Action не
-управляет частотой обновления на твоём устройстве.
-
-## Что лежит в репозитории
-
-- `build_anywhere_refilter.py` — прежний Python-генератор Re:filter.
-- `dist/*.arrs` — пять готовых наборов.
-- `.github/workflows/update.yml` — ежедневный Action с автокоммитом.
-- `docs/index.html` — страница массового и отдельного импорта.
-
-Локальная сборка: `python3 build_anywhere_refilter.py`.
-
-Разделение сохранено прежним: noECH — пересечение текущего Re:filter с
-dnsmasq-списком Akiyamov; ECH — оставшиеся домены. Это практическое приближение:
-отсутствие домена в noECH-списке само по себе не доказывает поддержку ECH.
-Вариант без разделения использует весь Re:filter → PROXY.
-
-Первичные источники: [импорт нескольких наборов](https://github.com/NodePassProject/Anywhere#import-rule-sets),
-[формат и приоритеты Anywhere](https://github.com/NodePassProject/Anywhere/blob/main/Documentations/Routing.md),
-[парсер начальных назначений](https://github.com/NodePassProject/Anywhere/blob/main/Anywhere/Views/Pages/Routing/RoutingRuleParser.swift),
-[Re:filter](https://github.com/1andrevich/Re-filter-lists),
-[Akiyamov noECH](https://github.com/Akiyamov/singbox-ech-list).
+Local build: `python3 build_anywhere_refilter.py`.
