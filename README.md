@@ -29,7 +29,7 @@ Unmatched traffic uses Anywhere's default route, so with your VLESS config selec
 
 After pushing this repo to GitHub, use Raw URLs ending in `.arrs`, e.g.:
 
-`https://raw.githubusercontent.com/USER/REPO/main/dist/refilter-noech.arrs`
+`https://raw.githubusercontent.com/Conv3lsive/anywhere-refilter/main/dist/refilter-noech.arrs`
 
 Anywhere only treats an HTTP(S) URL as a rule subscription when its path ends in `.arrs`.
 
