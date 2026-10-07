@@ -1,5 +1,7 @@
 # Shadowrocket Ru-Direct → Anywhere
 
+Репозиторий: [Conv3lsive/anywhere-refilter](https://github.com/Conv3lsive/anywhere-refilter).
+
 Готовый проект для GitHub: исходный `source/Ru-Direct.conf`, Python-генератор,
 готовые `.arrs` в `dist/` и ежедневное обновление через GitHub Actions.
 Python 3.10+; сторонние библиотеки не нужны. В Action используется Python 3.13.
@@ -68,9 +70,9 @@ Anywhere — 100 000. Новые части нужно добавить в по�
 
    | Файл | Действие |
    |---|---|
-   | `actions/proxy-001.arrs` | **PROXY** |
-   | `actions/direct-001.arrs` | **DIRECT** |
-   | `actions/reject-001.arrs` | **REJECT** |
+   | [proxy-001.arrs](https://raw.githubusercontent.com/Conv3lsive/anywhere-refilter/main/dist/actions/proxy-001.arrs) | **PROXY** |
+   | [direct-001.arrs](https://raw.githubusercontent.com/Conv3lsive/anywhere-refilter/main/dist/actions/direct-001.arrs) | **DIRECT** |
+   | [reject-001.arrs](https://raw.githubusercontent.com/Conv3lsive/anywhere-refilter/main/dist/actions/reject-001.arrs) | **REJECT** |
 
 4. Проверить назначение **PROXY** вручную: формат файла позволяет задать
    начальный DIRECT/REJECT, но не PROXY. Оставленный **Default** относится к
@@ -78,12 +80,12 @@ Anywhere — 100 000. Новые части нужно добавить в по�
 5. Проверить DNS-настройки по следующему разделу, обновить подписки,
    переподключить туннель и проверить примеры в конце README.
 
-После публикации в публичный `USER/REPO`, ветка `main`, URL будут такими:
+Готовые публичные URL подписок из вашего репозитория, ветка `main`:
 
 ```text
-https://raw.githubusercontent.com/USER/REPO/main/dist/actions/proxy-001.arrs
-https://raw.githubusercontent.com/USER/REPO/main/dist/actions/direct-001.arrs
-https://raw.githubusercontent.com/USER/REPO/main/dist/actions/reject-001.arrs
+https://raw.githubusercontent.com/Conv3lsive/anywhere-refilter/main/dist/actions/proxy-001.arrs
+https://raw.githubusercontent.com/Conv3lsive/anywhere-refilter/main/dist/actions/direct-001.arrs
+https://raw.githubusercontent.com/Conv3lsive/anywhere-refilter/main/dist/actions/reject-001.arrs
 ```
 
 Вместо трёх action-наборов можно подключить **все** файлы из `dist/sets/`
@@ -206,25 +208,23 @@ ECH/noECH-разделение старого генератора не пере
 `dist/` заменяются новой структурой. Их прежние подписки в Anywhere нужно
 удалить либо отключить и подключить новые action-URL.
 
-## Публикация в GitHub
+## Обновление в GitHub
 
-Загрузить **содержимое** этой папки в публичный репозиторий, например
-`anywhere-refilter`. В корне должны быть `build_rules.py`, `source/`,
+Проект опубликован в [Conv3lsive/anywhere-refilter](https://github.com/Conv3lsive/anywhere-refilter).
+Для дальнейших изменений обновить **содержимое** папки в этом репозитории.
+В корне должны быть `build_rules.py`, `source/`,
 `dist/`, `.github/`, а не ещё один вложенный `anywhere-refilter/`.
 Публичные raw-URL доступны Anywhere без GitHub-авторизации.
 
-В терминале из папки проекта, для нового репозитория:
+В терминале из существующей папки проекта, после изменения исходника:
 
 ```sh
-gh auth login -h github.com
-git init -b main
 git add .
-git commit -m "feat: migrate Ru-Direct routing to Anywhere"
-gh repo create anywhere-refilter --public --source=. --remote=origin --push
+git commit -m "chore: update Ru-Direct routing policy"
+git push origin main
 ```
 
-Если репозиторий уже существует, обновить его checkout этими файлами и
-сделать обычный commit/push; команду создания репозитория повторять не нужно.
+Если GitHub просит войти снова: `gh auth login -h github.com`.
 Архив содержит `.github/workflows/update.yml`, включая скрытую папку `.github`.
 
 Затем **Actions → Update Anywhere Shadowrocket routing → Run workflow**.
