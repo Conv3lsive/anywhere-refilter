@@ -2,8 +2,9 @@ name: Update Anywhere ReFilter rules
 
 on:
   workflow_dispatch:
+
   schedule:
-    - cron: '17 3 * * *'
+    - cron: "17 3 * * *"
 
 permissions:
   contents: write
@@ -11,18 +12,30 @@ permissions:
 jobs:
   build:
     runs-on: ubuntu-latest
+
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-python@v5
+      - name: Checkout repository
+        uses: actions/checkout@v7
+
+      - name: Set up Python
+        uses: actions/setup-python@v7
         with:
-          python-version: '3.12'
-      - name: Build .arrs
+          python-version: "3.13"
+
+      - name: Build Anywhere rule sets
         run: python build_anywhere_refilter.py
+
       - name: Commit updated rules
         run: |
-          git config user.name github-actions[bot]
-          git config user.email 41898282+github-actions[bot]@users.noreply.github.com
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
           git add dist/*.arrs
-          git diff --cached --quiet && exit 0
+
+          if git diff --cached --quiet; then
+            echo "No changes"
+            exit 0
+          fi
+
           git commit -m "chore: update Anywhere ReFilter rules"
           git push
